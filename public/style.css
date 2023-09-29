@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #ffcc99;
+}
+
+.root {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    width: 40%;
+    height: 40%;
+    background-image: linear-gradient(to right,#ccff33, #ff9933);
+    border: 5px solid black;
+    border-radius: 18px;
+}
+
+.root > form > label {
+    font-size: 2vmax;
+    margin: 3px;
+}
+
+.root > form > input {
+    font-size: 1.8vmax;
+    padding: 12px;
+    margin: 3px;
+}
+
+#submitButton {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 70%);
+    text-align: center;
+}
+
+#submitButtonLoginForm {
+    position: relative;
+    left: 30%;
+    transform: translate(-50%, 70%);
+    text-align: center;
+}
+
+#newAccount {
+    width: 25%;
+    height: 10%;
+    font-size: 1.8vmax;
+    position: relative;
+    transform: translate(100%, 40%);
+    text-align: center;
+}
+
+#titleText {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.2vmax;
+    font-weight: bold;
+    font-style: italic;
+}
