@@ -12,18 +12,29 @@ const AddUser = async (username, password) => {
     if(password === "" || password === null) return;
 
     let newUser = {
-        id : userDB.users[userDB.users.length - 1].id + 1 || 1,
         userName : username,
         passWord : password
     };
 
-    userDB.users.push(newUser);
-    await fsPromises.writeFile(path.join(__dirname, "..", "data", "users.json"), JSON.stringify(userDB.users))
+    if(await CheckForExistance(username, password) == false) {
+        userDB.users.push(newUser);
+        await fsPromises.writeFile(path.join(__dirname, "..", "data", "users.json"), JSON.stringify(userDB.users));
+    }
+    else {
+        console.log('User with these username and password already exists');
+    }
+   
 }
 
 const CheckForExistance = async (username, password) => {
-    const userFound = userDB.users.find(indexValue => {indexValue.userName === username && indexValue.passWord === password});
+    const userFound = userDB.users.find(indexValue => {
+        if(indexValue.userName === username && indexValue.passWord === password) {
+            return true;
+        }
+        return false;
+    });
 
+    //console.log(userFound);
     if(!userFound) return false;
     console.log(userFound);
     return true;

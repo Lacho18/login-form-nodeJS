@@ -8,6 +8,8 @@ const PORT = 5000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
+app.set('views', path.join(__dirname, 'htmlDocs'));
+app.set('view engine', 'ejs');
 app.use('/', require('./routes/mainFile'));
 app.use('/submit', require('./routes/submit'));
 

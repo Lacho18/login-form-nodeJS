@@ -11,18 +11,19 @@
                 <p id="titleText">Login to your account</p>
                 <form id="loginForm" action="/login" method="POST">
                     <label for="username">Username : </label><input type="text" name="username" id="username"/>
+                    <label for="password" id="passwordHint">Password should be at least 7 symbols!</label>
                     <label for="password">Password : </label><input type="password" name="password" id="password"/>
                     <input type="submit" id="submitButtonLoginForm"/>
-                    <button id="newAccount">New account</button>
                 </form>
+                <button id="newAccountButton">New account</button>
             </div>
         </section>
 
         <section id="newAccount" hidden>
             <div class="root">
                 <form id="myForm" action="/submit" method="POST">
-                    <label for="username">Enter username : </label><input type="text" name="username" id="username"/>
-                    <label for="password">Enter password : </label><input type="password" name="password" id="password"/>
+                    <label for="username">Enter username : </label><input type="text" name="username" id="usernameNew"/>
+                    <label for="password">Enter password : </label><input type="password" name="password" id="passwordNew"/>
                     <input type="submit" id="submitButton"/>
                 </form>
             </div>

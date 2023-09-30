@@ -28,7 +28,7 @@ body {
 .root > form > input {
     font-size: 1.8vmax;
     padding: 12px;
-    margin: 3px;
+    margin: 12px;
 }
 
 #submitButton {
@@ -41,16 +41,16 @@ body {
 #submitButtonLoginForm {
     position: relative;
     left: 30%;
-    transform: translate(-50%, 70%);
+    transform: translate(-50%, -30%);
     text-align: center;
 }
 
-#newAccount {
+#newAccountButton {
     width: 25%;
-    height: 10%;
+    height: 23%;
     font-size: 1.8vmax;
     position: relative;
-    transform: translate(100%, 40%);
+    transform: translate(250%, -100%);
     text-align: center;
 }
 
@@ -60,4 +60,13 @@ body {
     font-size: 1.2vmax;
     font-weight: bold;
     font-style: italic;
+}
+
+#passwordHint {
+    position: absolute;
+    font-size: 0.8vmax;
+    display: inline;
+    width: 50%;
+    transform: translate(50%, -50%);
+    color: rgb(235, 17, 17);
 }
