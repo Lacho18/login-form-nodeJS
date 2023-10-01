@@ -6,19 +6,22 @@
     </head>
 
     <body>
-        <section id="Loginform">
+        <section id="Loginform" hidden>
             <div class="root">
                 <p id="titleText">Login to your account</p>
                 <form id="loginForm" action="/login" method="POST">
+                    <p><%= dataToSend.incorrectUser %></p> 
                     <label for="username">Username : </label><input type="text" name="username" id="username"/>
+                    <p><%= dataToSend.incorrectPassword %></p>
                     <label for="password">Password : </label><input type="password" name="password" id="password"/>
                     <input type="submit" id="submitButtonLoginForm"/>
                 </form>
                 <button id="newAccountButton">New account</button>
+                <h1>TOVA E DRYGO JIVOTNO!</h1>
             </div>
         </section>
 
-        <section id="newAccount" hidden>
+        <section id="newAccount">
             <div class="root">
                 <form id="myForm" action="/submit" method="POST">
                     <label for="username">Enter username : </label><input type="text" name="username" id="usernameNew"/>

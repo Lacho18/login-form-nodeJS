@@ -1,0 +1,7 @@
+#responsiveText {
+    position: absolute;
+    transform: translate(0, -150%);
+    color: darkred;
+    font-size: 1.2vmax;
+    font-family: 'Times New Roman', Times, serif;
+}

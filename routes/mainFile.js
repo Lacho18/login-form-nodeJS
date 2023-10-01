@@ -11,13 +11,23 @@ router.get("/about(.html)?", (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'htmlDocs', 'about.html'));
 });
 
-router.post('/submit', (req, res) => {
+router.post('/submit', async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
 
-    //res.send(`Data resieved : username ${username} and password ${password}`);
-    functions.AddUser(username, password);
-    res.sendFile(path.join(__dirname, '..', 'htmlDocs', 'index.html'));
+    let addingProcess = await functions.AddUser(username, password);
+    //console.log(addingProcess);
+    const response = {
+        message : addingProcess
+    }
+
+    if(addingProcess === "success") {
+        res.sendFile(path.join(__dirname, '..', 'htmlDocs', 'index.html'));
+    }
+    else {
+        console.log("Here!");
+        res.render('submitSection', {response});
+    }
 });
 
 router.post('/login', (req, res) => {
@@ -28,9 +38,8 @@ router.post('/login', (req, res) => {
 });
 
 async function check(res, user, password) {
-    if(await functions.CheckForExistance(user, password)) {
+    if(await functions.CheckForExistance(user, password, res)) {
         const username = {usr : user};
-        //res.sendFile(path.join(__dirname, '..', 'htmlDocs', 'Welcome.html'));
         res.render('Welcome', {username});
     }
     else {

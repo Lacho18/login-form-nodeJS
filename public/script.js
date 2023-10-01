@@ -5,7 +5,7 @@ let submitButton = document.getElementById('submitButton');
 let submitButtonLoginForm = document.getElementById('submitButtonLoginForm');
 
 let userNameInput = document.getElementById("username");
-let passWordInput = document.getElementById("password");
+let passWordInput = document.getElementById("passwordNew");
 let labelHint = document.getElementById('passwordHint');
 
 newAccountSection.style.display = 'none';
@@ -16,25 +16,25 @@ newAcountButton.addEventListener('click', () => {
     loginSection.style.display = 'none';
 });
 
-submitButton.addEventListener('click', () => {
+/*submitButton.addEventListener('click', () => {
     newAccountSection.style.display = 'none';
     loginSection.style.display = 'inline';
-});
+});*/
 
-submitButtonLoginForm.disabled = true;
+submitButtonLoginForm.disabled = false;   //true
 
 function checkForNullValues(userValue, passwordValue) {
     console.log(userValue);
     console.log(passwordValue);
 
-    if((userValue !== null && passwordValue !== null) && (userValue !== "" && passwordValue !== "")) {
+    /*if((userValue !== null && passwordValue !== null) && (userValue !== "" && passwordValue !== "")) {
         if(passwordValue.length >= 7) {
             submitButtonLoginForm.disabled = false;
         }
     }
     else {
         submitButtonLoginForm.disabled = true;
-    }
+    }*/
 }
 
 userNameInput.addEventListener('input', () => {
