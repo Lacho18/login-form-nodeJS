@@ -4,7 +4,8 @@ const fsPromises = require('fs').promises;
 
 const userDB = {
     users : require(path.join(__dirname, "..", "data", "users.json")),
-    setUser : function (data) {this.users, data}
+    setUser : function (data) {this.users, data},
+    deleteUser : function (userUsername) {this.users = this.users.filter(indexValue => {indexValue.userName !== userUsername})}
 }
 
 const AddUser = async (username, password) => {
@@ -18,30 +19,37 @@ const AddUser = async (username, password) => {
         passWord : newPasswordCrypt
     };
 
-    //if(await CheckForExistance(username, password) == false) {
-        if(await checkForUserExistance(username) == true) {
-            userDB.users.push(newUser);
-            await fsPromises.writeFile(path.join(__dirname, "..", "data", "users.json"), JSON.stringify(userDB.users));
-
-            //The new user is succsesfuly added to tha data base
-            return "success";
-        }
-    //}
+    let passwordResponse = goodPasswordCheck(password);
+    let isPasswordValid = false;
+    if(passwordResponse === "good") {
+        isPasswordValid = true;
+    }
     else {
-        //console.log('User with these username and password already exists');
+        return passwordResponse;
+    }
+
+    if(await checkForUserExistance(username) == true && isPasswordValid) {
+        userDB.users.push(newUser);
+        await fsPromises.writeFile(path.join(__dirname, "..", "data", "users.json"), JSON.stringify(userDB.users));
+
+        //The new user is succsesfuly added to tha data base
+        return "success";
+    }
+
+    else {
         return `User with username - ${username} already exist. Please enter different username!`;
     }
 }
 
 const CheckForExistance = async (username, password, res) => {
+    const validPassword = criptingPassword(password);
     const userFound = userDB.users.find(indexValue => {
-        if(indexValue.userName === username && indexValue.passWord === password) {
+        if(indexValue.userName === username && indexValue.passWord === validPassword) {
             return true;
         }
         return false;
     });
 
-    //console.log(userFound);
     if(!userFound) return false;
     console.log(userFound);
     return true;
@@ -51,7 +59,6 @@ const checkForUserExistance = async (username) => {
     let lookingForUser = userDB.users.find(indexValue => {return indexValue.userName === username});
 
     if(!lookingForUser) {
-        //console.log(lookingForUser);
         return true;
     }
     return false;
@@ -68,4 +75,28 @@ const criptingPassword = (password) => {
     return cryptPassword;
 }
 
-module.exports = {AddUser, CheckForExistance};
+const goodPasswordCheck = (password) => {
+    if(password.length < 7) {
+        return "The password should be at least 7 symbols";
+    }
+    let symbolDigits = /[^0-9]/;
+    if(!symbolDigits.test(password)) {
+        return "Password that have only digits is not recommended";
+    }
+    let specialSymbol = "@";
+    if(password.indexOf(specialSymbol) === -1) {
+        return "Password is recommended to have symbol '@' in it";
+    }
+
+    return "good";
+}
+
+const changePassword = (username, password) =>  {
+    let user = userDB.users.find(indexValue => {return indexValue.userName === username});
+    user.passWord = password; //cpypting here
+
+    userDB.deleteUser(user.userName);
+    userDB.users.push(user);
+}
+
+module.exports = {AddUser, CheckForExistance, checkForUserExistance, changePassword};

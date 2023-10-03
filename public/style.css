@@ -41,7 +41,7 @@ body {
 #submitButtonLoginForm {
     position: relative;
     left: 30%;
-    transform: translate(-50%, -30%);
+    transform: translate(-50%, 15%);
     text-align: center;
 }
 
@@ -50,7 +50,7 @@ body {
     height: 23%;
     font-size: 1.8vmax;
     position: relative;
-    transform: translate(250%, -100%);
+    transform: translate(250%, -80%);
     text-align: center;
 }
 
@@ -69,4 +69,11 @@ body {
     width: 50%;
     transform: translate(50%, -50%);
     color: rgb(235, 17, 17);
+}
+
+#forgot {
+    position: absolute;
+    display: inline;
+    width: 30%;
+    transform: translate(-70%, 400%);
 }

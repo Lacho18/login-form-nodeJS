@@ -16,7 +16,6 @@ router.post('/submit', async (req, res) => {
     let password = req.body.password;
 
     let addingProcess = await functions.AddUser(username, password);
-    //console.log(addingProcess);
     const response = {
         message : addingProcess
     }
@@ -35,6 +34,22 @@ router.post('/login', (req, res) => {
     let password = req.body.password;
 
     check(res, username, password);
+});
+
+router.get('/forgot', (req, res) => {
+    res.render('newPassword', {});
+});
+
+router.post('/newPassword', (req, res) => {
+    let currentUsername = req.body.usernameInput;
+    let newPassword = req.body.newPassword;
+    let confirmedPassword = req.body.confirmPassword;
+
+    if(functions.checkForUserExistance(currentUsername)) {
+        if(newPassword === confirmedPassword) {
+            functions.changePassword(currentUsername, newPassword);
+        }
+    }
 });
 
 async function check(res, user, password) {
