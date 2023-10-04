@@ -37,18 +37,34 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/forgot', (req, res) => {
-    res.render('newPassword', {});
+    let objectOfError = {
+        message : ""
+    }
+    res.render('newPassword', {objectOfError});
 });
 
-router.post('/newPassword', (req, res) => {
+router.post('/', (req, res) => {
     let currentUsername = req.body.usernameInput;
     let newPassword = req.body.newPassword;
     let confirmedPassword = req.body.confirmPassword;
 
+    let objectOfError = {
+        message : ""
+    }
+
     if(functions.checkForUserExistance(currentUsername)) {
         if(newPassword === confirmedPassword) {
             functions.changePassword(currentUsername, newPassword);
+            res.sendFile(path.join(__dirname, '..', 'htmlDocs', 'index.html'));
         }
+        else {
+            objectOfError.message = "Please confirm your password correct!";
+            res.render('newPassword', {objectOfError});
+        }
+    }
+    else {
+        objectOfError.message = "Please enter a valid username!";
+        res.render('newPassword', {objectOfError});
     }
 });
 

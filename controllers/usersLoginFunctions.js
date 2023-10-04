@@ -91,12 +91,14 @@ const goodPasswordCheck = (password) => {
     return "good";
 }
 
-const changePassword = (username, password) =>  {
-    let user = userDB.users.find(indexValue => {return indexValue.userName === username});
-    user.passWord = password; //cpypting here
+const changePassword = async (username, password) =>  {
+    let usersOfDataArray = userDB.users;
+    let user = usersOfDataArray.find(indexValue => indexValue.userName === username);
+    //user.passWord = criptingPassword(password); //cpypting here
 
-    userDB.deleteUser(user.userName);
-    userDB.users.push(user);
+    usersOfDataArray = usersOfDataArray.filter(indexValue => indexValue.userName !== username);
+    console.log(usersOfDataArray);
+    await fsPromises.writeFile(path.join(__dirname, "..", "data", "users.json"), JSON.stringify(userDB.users));
 }
 
 module.exports = {AddUser, CheckForExistance, checkForUserExistance, changePassword};
