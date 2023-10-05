@@ -19,7 +19,8 @@ const AddUser = async (username, password) => {
         passWord : newPasswordCrypt
     };
 
-    let passwordResponse = goodPasswordCheck(password);
+    //let passwordResponse = goodPasswordCheck(password);
+    let passwordResponse = "good";
     let isPasswordValid = false;
     if(passwordResponse === "good") {
         isPasswordValid = true;
@@ -28,7 +29,8 @@ const AddUser = async (username, password) => {
         return passwordResponse;
     }
 
-    if(await checkForUserExistance(username) == true && isPasswordValid) {
+    console.log(`With given value : ${username} the function returned : ${await checkForUserExistance(username)}`);
+    if(await checkForUserExistance(username) == false && isPasswordValid) {
         userDB.users.push(newUser);
         await fsPromises.writeFile(path.join(__dirname, "..", "data", "users.json"), JSON.stringify(userDB.users));
 
@@ -51,14 +53,13 @@ const CheckForExistance = async (username, password, res) => {
     });
 
     if(!userFound) return false;
-    console.log(userFound);
     return true;
 }
 
 const checkForUserExistance = async (username) => {
     let lookingForUser = userDB.users.find(indexValue => {return indexValue.userName === username});
 
-    if(!lookingForUser) {
+    if(lookingForUser !== undefined) {
         return true;
     }
     return false;
@@ -94,10 +95,9 @@ const goodPasswordCheck = (password) => {
 const changePassword = async (username, password) =>  {
     let usersOfDataArray = userDB.users;
     let user = usersOfDataArray.find(indexValue => indexValue.userName === username);
-    //user.passWord = criptingPassword(password); //cpypting here
+    user.passWord = criptingPassword(password); //cpypting here
 
     usersOfDataArray = usersOfDataArray.filter(indexValue => indexValue.userName !== username);
-    console.log(usersOfDataArray);
     await fsPromises.writeFile(path.join(__dirname, "..", "data", "users.json"), JSON.stringify(userDB.users));
 }
 

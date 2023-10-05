@@ -43,7 +43,7 @@ router.get('/forgot', (req, res) => {
     res.render('newPassword', {objectOfError});
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     let currentUsername = req.body.usernameInput;
     let newPassword = req.body.newPassword;
     let confirmedPassword = req.body.confirmPassword;
@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
         message : ""
     }
 
-    if(functions.checkForUserExistance(currentUsername)) {
+    if(await functions.checkForUserExistance(currentUsername)) {
         if(newPassword === confirmedPassword) {
             functions.changePassword(currentUsername, newPassword);
             res.sendFile(path.join(__dirname, '..', 'htmlDocs', 'index.html'));
